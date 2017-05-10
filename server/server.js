@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+const fs = require('fs');
+
 const bodyParser = require('body-parser')
 const bodyParserXML = require('body-parser-xml');
 
@@ -10,13 +12,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 bodyParserXML(bodyParser);
 app.use(bodyParser.xml());
 
-// Middleware to handle helloworld request
-app.use('/v1/helloworld', (req,res,next) => {
-    try {
-        const {subject} = req.body;
-        res.send(`Hello ${subject}`);
-    } catch (e) {
-        next(e);
+fs.readdir(`${__dirname}/routes/`, (err,files) => {
+    for(const file of files) {
+        const path = '/v1/' + file.split(".")[0];
+        console.log('Attaching router:',path);
+        app.use(path,require(`${__dirname}/routes/${file}`))
     }
 })
 
