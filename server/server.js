@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const fs = require('fs');
+const log = require('./libs/logger');
 
 const bodyParser = require('body-parser')
 const bodyParserXML = require('body-parser-xml');
@@ -15,7 +16,7 @@ app.use(bodyParser.xml());
 fs.readdir(`${__dirname}/routes/`, (err,files) => {
     for(const file of files) {
         const path = '/v1/' + file.split(".")[0];
-        console.log('Attaching router:',path);
+        log.info('Attached  router:',path);
         app.use(path,require(`${__dirname}/routes/${file}`))
     }
 })
@@ -23,5 +24,5 @@ fs.readdir(`${__dirname}/routes/`, (err,files) => {
 // Start express server and listen to the PORT specified below
 const PORT = 3000
 app.listen(PORT, function() {
-  console.log('Express server running at localhost:' + PORT)
+  log.debug('Express server running at localhost:' + PORT)
 })
