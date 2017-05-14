@@ -17,7 +17,9 @@
     "create-error": "^0.3.1",
     "express": "^4.15.2",
     "mongoose": "^4.9.8",
-    "mongoose-class-wrapper": "^0.9.0"
+    "mongoose-class-wrapper": "^0.9.0",
+    "redis": "^2.7.1",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
