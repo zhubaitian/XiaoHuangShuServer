@@ -10,11 +10,17 @@ const User = require('../models/User');
 const authMidware = async (req, res, next) => {
     try {
       const accessToken = req.headers.authorization;
-      log.debug('accessToken:', accessToken)
+      log.debug('accessToken:', accessToken);
+
+      if (req.path === '/favicon.ico') {
+        res.status(404).end();
+        return;
+      }
 
       // APIS need no authentication
       if (req.path === '/'
-          || req.path === '/v1/auth/login') {
+          || req.path === '/v1/auth/login'
+          || req.path.startsWith('/v1/uploads')) {
 
         log.debug('no auth required');
         next();

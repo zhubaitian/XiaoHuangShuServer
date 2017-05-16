@@ -8,6 +8,11 @@ module.exports = {
   },
   auth: {
     ttl: 3600,
-  }
+  },
+  server: {
+    protocol: 'http://',
+    host: 'localhost:3000',
+    version: 'v1',
+  },
 };
 

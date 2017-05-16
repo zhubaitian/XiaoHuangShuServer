@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+const path = require('path');
 const redis = require('./libs/redisdb');
 const ClientError = require('./errors/ClientError');
 const fs = require('fs');
@@ -26,6 +27,9 @@ fs.readdir(`${__dirname}/routes/`, (err,files) => {
         app.use(path,require(`${__dirname}/routes/${file}`))
     }
 })
+
+app.use('/v1/uploads', express.static('uploads/'));
+// log.debug('path:',path.join(__dirname + '/uploads/'));
 
 // Start express server and listen to the PORT specified below
 const PORT = 3000
