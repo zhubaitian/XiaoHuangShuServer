@@ -3,4 +3,4 @@ A tutorial project on how to develop nodejs backend.
 
 Change List:
 ---
-- Support uploading image file to server
+- Support uploading image file to CDN

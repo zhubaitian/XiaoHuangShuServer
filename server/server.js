@@ -23,8 +23,10 @@ app.use(require('./midware/auth'));
 fs.readdir(`${__dirname}/routes/`, (err,files) => {
     for(const file of files) {
         const path = '/v1/' + file.split(".")[0];
-        log.info('Attached  router:',path);
-        app.use(path,require(`${__dirname}/routes/${file}`))
+		if (file.split('.')[1] && file.split('.')[1] === 'js') {
+			log.info('Attached  router:',path);
+			app.use(path,require(`${__dirname}/routes/${file}`))
+		}
     }
 })
 

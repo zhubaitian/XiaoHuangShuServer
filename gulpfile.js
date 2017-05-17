@@ -6,6 +6,7 @@ gulp.task('nodemon', function () {
         verbose: false,
         exec: 'node --inspect',
         script: 'server/server.js',
+		ext: 'js',
         watch: ['server'],
         delay: 2000,
     })

@@ -14,5 +14,8 @@ module.exports = {
     host: 'localhost:3000',
     version: 'v1',
   },
+  upload: {
+    to_upyun: true, // 是否上传到又拍云
+  }
 };
 

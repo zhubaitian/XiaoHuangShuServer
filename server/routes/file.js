@@ -10,8 +10,26 @@ const uuid = require('uuid');
 const ClientError = require('../errors/ClientError');
 
 const Image = require('../models/Image');
-var path = require('path');
+const path = require('path');
 const config = require('../config/configuration');
+const confidential = require('../config/confidential');
+
+/*
+upload: {
+  protocol: 'http://',
+  host: 'xiaohuangshu.b0.upaiyun.com',
+  bucket: 'xiaohuangshu',
+  operator: 'xxxxx',
+  password: 'xxxxxxxx',
+},
+*/
+
+const UPYUN = require('upyun');
+const upyun = new UPYUN(confidential.upload.bucket,
+    confidential.upload.operator,
+    confidential.upload.password,
+    confidential.upload.endpoint,
+    {apiVersion:confidential.upload.api_version});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,9 +59,6 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    let today = null;
-    let tomorrow = null;
-
     const query = {};
 
     const files = await Image.find(query);
@@ -72,10 +87,29 @@ router.post('/', upload.single('image'), async (req, res, next) => {
             url: `${config.server.protocol}${config.server.host}/${config.server.version}/uploads/${filename}`
         };
 
-        const imageFile = new Image(image);
-        await imageFile.save();
+        if (config.upload.to_upyun) {
+            upyun.putFile(filename, req.file.path, req.file.mimetype, true, {}, async(err, result) => {
+                if (err) {
+                    log.error('Upyun error', err, err.stack);
+                    res.status(500).send('Failed to sync to cdn server');
+                    return;
+                }
+                if (result.statusCode !== 200) {
+                    log.error('Upyun error', result);
+                    res.status(500).send('Upyun response with error');
+                    return;
+                }
 
-        res.send(imageFile);
+                image.url = confidential.upload.protocol + confidential.upload.host + '/' + filename;
+                const imageFile = new Image(image);
+                await imageFile.save();
+                res.send(imageFile);
+            })
+        } else {
+            const imageFile = new Image(image);
+            await imageFile.save();
+            res.send(imageFile);
+        }
 
     } catch (e) {
         next(e);
@@ -93,16 +127,35 @@ router.delete('/:id', async (req, res, next) => {
       throw new ClientError.NotFoundError();
     }
 
-    fs.unlink(`uploads/${file.filename}`, (fserr) => {
+    fs.unlink(`uploads/${file.filename}`, async (fserr) => {
       if (fserr) {
         log.error('Failed to remove upload tmp file', `uploads/${file.filename}`);
         res.status(500).send('Failed to del file');
         return;
       }
+
+      if (config.upload.to_upyun) {
+          upyun.deleteFile(file.filename, async(err, result) => {
+              if (err) {
+                  log.error('Upyun error', err, err.stack);
+                  res.status(500).send('Failed to del cdn server');
+                  return;
+              }
+              if (result.statusCode !== 200) {
+                  log.error('Upyun error', result);
+                  res.status(500).send('Upyun response with error');
+                  return;
+              }
+
+              await file.remove();
+              res.status(204).end();
+          });
+      } else {
+          await file.remove();
+          res.status(204).end();
+      }
     });
 
-    await file.remove();
-    res.status(204).end();
 
   } catch (e) {
     next(e);
