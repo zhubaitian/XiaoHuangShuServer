@@ -3,4 +3,5 @@ A tutorial project on how to develop nodejs backend.
 
 Change List:
 ---
-- Support uploading image file to CDN
+- Support Sending SMS by luosimao and yunpian
+- pingpp debug support
