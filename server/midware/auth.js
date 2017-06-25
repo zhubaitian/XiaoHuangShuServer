@@ -20,6 +20,8 @@ const authMidware = async (req, res, next) => {
       // APIS need no authentication
       if (req.path === '/'
           || req.path === '/v1/auth/login'
+          || req.path === '/v1/pingpp/webhooks'
+          || req.path.startsWith('/v1/pingpp/channel/')
           || req.path.startsWith('/v1/uploads')) {
 
         log.debug('no auth required');

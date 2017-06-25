@@ -7,6 +7,7 @@ const ClientError = require('./errors/ClientError');
 const fs = require('fs');
 const log = require('./libs/logger');
 const Client = require('./errors/ClientError');
+const cors = require('cors');
 
 const bodyParser = require('body-parser')
 const bodyParserXML = require('body-parser-xml');
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 bodyParserXML(bodyParser);
 app.use(bodyParser.xml());
+app.use(cors());
 
 // Authentication middleware
 app.use(require('./midware/auth'));

@@ -16,6 +16,10 @@ module.exports = {
   },
   upload: {
     to_upyun: true, // 是否上传到又拍云
+  },
+  sms: {
+    yunpian: false,
+    luosimao: true,
   }
 };
 

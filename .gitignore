@@ -1,3 +1,5 @@
 node_modules/
 uploads/
 server/config/confidential.js
+server/config/rsa_private_key.pem
+server/config/pingpp_rsa_private_key.pem
