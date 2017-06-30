@@ -6,7 +6,6 @@ const User = require('../models/User.js');
 const ClientError = require('../errors/ClientError');
 const router = express.Router();
 
-
 router.get('/', async (req, res, next) => {
   try {
     let query = {};

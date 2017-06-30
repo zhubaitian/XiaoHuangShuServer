@@ -1,4 +1,7 @@
 module.exports = {
+  run_mode: {
+    is_debug: true
+  },
   mongo: {
     url: 'mongodb://127.0.0.1:27017/xiaohuangshu',
   },
@@ -7,7 +10,10 @@ module.exports = {
     port: '6379',
   },
   auth: {
-    ttl: 3600,
+    ttl: {
+      user: 3600,
+      member: 3600,
+    },
   },
   server: {
     protocol: 'http://',
@@ -20,6 +26,9 @@ module.exports = {
   sms: {
     yunpian: false,
     luosimao: true,
+  },
+  member: {
+    default_nickname: '小黄兵'
   }
 };
 
