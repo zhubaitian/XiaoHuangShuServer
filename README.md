@@ -172,7 +172,7 @@ fs.readdir(`${__dirname}/routes/`, (err,files) => {
 # 3. 结语
 ---
 最新的代码请可以从github中获取。
-> -  git clone https://github.com/zhubaitian/XiaoHuangShuServer.git
+-  git clone https://github.com/zhubaitian/XiaoHuangShuServer.git
 - cd XiaoHuangShuServer/
 - git checkout CH02
 - npm install 
