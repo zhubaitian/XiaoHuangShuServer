@@ -1,4 +1,4 @@
-# 第一章 [小黄书后台]Insomnia及HelloWorld
+# 第一章 Insomnia及HelloWorld
 
 我们今天开始迈出小黄书项目实战的第一步。前几篇文章就主要围绕Nodejs+Express的架构的构建。当我们架构建好之后，到时我们只需要在需要的位置填写代码就好了，开发起来就能非常快速。
 
