@@ -192,7 +192,7 @@ module.exports = log;
 # 4. 结语
 ---
 最新的代码请可以从github中获取。
-> -  git clone https://github.com/zhubaitian/XiaoHuangShuServer.git
+-  git clone https://github.com/zhubaitian/XiaoHuangShuServer.git
 - cd XiaoHuangShuServer/
 - git checkout CH03
 - npm install 
