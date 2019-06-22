@@ -360,7 +360,7 @@ throw new ClientError.InvalidLoginError();
 ---
 
 上面只是为了讲解方便展示了一部分代码，完整的代码请从github中获取。
-> -  git clone https://github.com/zhubaitian/XiaoHuangShuServer.git
+-  git clone https://github.com/zhubaitian/XiaoHuangShuServer.git
 - cd XiaoHuangShuServer/
 - git checkout CH04
 - npm install 
